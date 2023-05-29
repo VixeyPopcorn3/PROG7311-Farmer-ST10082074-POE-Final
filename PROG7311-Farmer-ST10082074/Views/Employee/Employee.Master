@@ -1,0 +1,132 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Employee.master.cs" Inherits="PROG7311_Farmer_ST10082074.Employee" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Employees</title>
+    <style>
+        /* Add custom styles here */
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #7e57c2;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .navbar {
+            background-color: #9c27b0;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            display: inline;
+            margin-right: 10px;
+        }
+        .navbar ul {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .navbar li.logout {
+            margin-left: auto;
+        }
+
+        .navbar a {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #7b1fa2;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .icon {
+            width: 50px;
+            height: 45px;
+        }
+
+        .icon-small {
+            width: 49px;
+            height: 42px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="header">
+            <h1>Employees</h1>
+        </div>
+        <div class="navbar">
+            <ul>
+                <li>
+                    <a href="EmpAbout.aspx">
+                        <img alt="" class="icon" src="../../Resources/I.png" /><br />
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="AllFarmers.aspx">
+                        <img alt="" class="icon-small" src="../../Resources/Farmer%20Icon.png" /><br />
+                        Farmers
+                    </a>
+                </li>
+                <li>
+                    <a href="AddFarmer.aspx">
+                        <img alt="" class="icon" src="../../Resources/Add%20Icon.png" /><br />
+                        Add Farmer
+                    </a>
+                </li>
+                <li>
+                    <a href="EmployeeDets.aspx">
+                        <img alt="" class="icon-small" src="../../Resources/Details%20icon.jpg" /><br />
+                        Details
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="../LogIn.aspx">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <asp:ContentPlaceHolder ID="EmployeeContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%= DateTime.Now.Year %> - Employee</p>
+            </footer>
+        </div>
+    </form>
+</body>
+</html>
