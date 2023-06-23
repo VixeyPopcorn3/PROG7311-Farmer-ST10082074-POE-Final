@@ -70,17 +70,39 @@ namespace PROG7311_Farmer_ST10082074.Classes
 
             return userType;
         }
-        
 
-        public void InsertUser(string email, string password, string salt)
+
+        public int GetLastEnteredUserID()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = $"SELECT TOP 1 Id FROM Users ORDER BY Id DESC";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    object result = command.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int userId))
+                    {
+                        return userId;
+                    }
+                }
+            }
+
+            throw new Exception("Failed to retrieve the last entered UserID.");
+        }
+        public void InsertUser(int id, string email, string password, string salt)
         {
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Users (Email, Password, UserType, Salt) VALUES (@Email, @Password, 1, @Salt);";
+
+                string query = "INSERT INTO [User] (Id, Email, Password, UserType, Salt) VALUES (@Id, @Email, @Password, 1, @Salt);";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@Id", id);
                     command.Parameters.AddWithValue("@Email", email);
                     command.Parameters.AddWithValue("@Password", password);
                     command.Parameters.AddWithValue("@Salt", salt);
@@ -112,6 +134,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
+                throw new Exception("User not found with the specified email.");
             }
         }
         public int GetUserIdByEmail(string email)
@@ -137,6 +160,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
             // Return a default value or throw an exception if necessary
             throw new Exception("User not found with the specified email.");
         }
+
 
         //method used in the AllFarmers page
         public DataTable GetAllFarmers()
@@ -187,7 +211,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Name, [Desc], DateAdded, Quantity FROM Products WHERE FarmerID = @loginID";
+                string query = "SELECT Id, Name, [Desc], DateAdded, Quantity FROM Product WHERE FarmerID = @loginID";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -209,7 +233,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT DISTINCT Name FROM Products WHERE FarmerID = @loginID";
+                string query = "SELECT DISTINCT Name FROM Product WHERE FarmerID = @loginID";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -231,7 +255,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Name, [Desc], DateAdded, Quantity FROM Products WHERE FarmerID = @loginID AND DateAdded >= @startDate AND DateAdded <= @endDate";
+                string query = "SELECT Id, Name, [Desc], DateAdded, Quantity FROM Product WHERE FarmerID = @loginID AND DateAdded >= @startDate AND DateAdded <= @endDate";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -255,7 +279,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Name, [Desc], DateAdded, Quantity FROM Products WHERE FarmerID = @loginID AND Name LIKE '%' + @productType + '%'";
+                string query = "SELECT Id, Name, [Desc], DateAdded, Quantity FROM Product WHERE FarmerID = @loginID AND Name LIKE '%' + @productType + '%'";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -277,7 +301,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
         //Method used in AddProduct page
         public bool AddProduct(string name, string description, DateTime dateAdded, int quantity, int farmerId)
                 {
-                    string query = "INSERT INTO Products (Name, [Desc], DateAdded, Quantity, FarmerID) VALUES (@Name, @Desc, @DateAdded, @Quantity, @FarmerID)";
+                    string query = "INSERT INTO Product (Name, [Desc], DateAdded, Quantity, FarmerID) VALUES (@Name, @Desc, @DateAdded, @Quantity, @FarmerID)";
 
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
@@ -342,7 +366,7 @@ namespace PROG7311_Farmer_ST10082074.Classes
         public static DataTable GetProducts(int farmerId)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["AzureSQLConnection"].ConnectionString;
-            string query = "SELECT ID, Name, [Desc], DateAdded, Quantity FROM Products WHERE FarmerID = @FarmerID";
+            string query = "SELECT ID, Name, [Desc], DateAdded, Quantity FROM Product WHERE FarmerID = @FarmerID";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

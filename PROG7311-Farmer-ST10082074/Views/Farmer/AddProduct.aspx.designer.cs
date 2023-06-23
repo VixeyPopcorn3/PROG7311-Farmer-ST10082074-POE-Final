@@ -57,7 +57,7 @@ namespace PROG7311_Farmer_ST10082074
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputSubmit btnAddProduct;
+        protected global::System.Web.UI.WebControls.Button btnAddProduct;
 
         /// <summary>
         /// lblMessage control.

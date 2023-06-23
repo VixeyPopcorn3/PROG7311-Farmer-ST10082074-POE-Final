@@ -63,9 +63,9 @@
             <input id="txtQuantity" type="number" runat="server" />
         </div>
         <div class="submit-container">
-            <input id="btnAddProduct" type="submit" runat="server" value="Add Product" OnClick="btnAddProduct_Click" />
+            <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" OnClick="btnAddProduct_Click"/>
         </div>
-        <div class="message" runat="server" visible="false">
-            <asp:Label ID="lblMessage" runat="server"></asp:Label>
+        <div class="error-message" visible="true">
+            <asp:Label ID="lblMessage" runat="server">.</asp:Label>
         </div>
 </asp:Content>

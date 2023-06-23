@@ -39,9 +39,10 @@
         font-size: 16px;
     }
 
-    .form-group input[type="submit"] {
+    .form-group button[type="submit"] {
         background-color: white;
         color: purple;
+        font-weight: bold;
         font-size: 16px;
         padding: 10px 20px;
         border: none;
@@ -92,7 +93,7 @@
             <input type="text" id="txtCity" runat="server" />
         </div>
         <div class="form-group">
-            <input type="submit" id="btnAddFarmer" runat="server" value="Add Farmer" OnClick="btnAddFarmer_Click" />
+            <asp:Button ID ="btnAddFarmer" type="submit" runat="server" text="Add Farmer" OnClick="btnAddFarmer_Click" />
         </div>
         <div class="form-group">
             <asp:Label ID="lblCompletionMessage" runat="server" CssClass="completion-message" Visible="false"></asp:Label>
